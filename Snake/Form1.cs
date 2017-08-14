@@ -15,9 +15,11 @@ namespace Snake
         List<Label> LabelList = new List<Label>();
         List<Label> FoodList = new List<Label>();
         List<string> SaveLastClickList = new List<string>();
+        List<Point> locationsave = new List<Point>();
+
+
         Random rm = new Random();
         string a = "";
-        int z = 0;
         int p = 0;
         System.Timers.Timer timer = new System.Timers.Timer(400);
         public Form1()
@@ -37,7 +39,7 @@ namespace Snake
             lbl.Size = new Size(20, 20);
             lbl.Location = new Point(rm.Next(1, 14) * 20, rm.Next(1, 14) * 20);
             lbl.BackColor = Color.Red;
-            lbl.Text =">>";
+            lbl.Font = new Font("Serif", 11, FontStyle.Bold);
             LabelList.Add(lbl);
             foreach (var item in LabelList)
             {
@@ -52,14 +54,20 @@ namespace Snake
             {
                 Label food = new Label();
                 food.Size = new Size(20, 20);
-                food.Text = ""+i;
+                food.Text = "O";
+                food.Font = new Font("Serif", 11, FontStyle.Bold);
                 food.Location = new Point(rm.Next(1, 14) * 20, rm.Next(1, 14) * 20);
                 food.BackColor = Color.Aqua;
-                //food.Hide();
                 FoodList.Add(food);
-                this.Controls.Add(food);
             }
-           // FoodList[0].Show();
+            foreach (var item in FoodList)
+            {
+                this.Controls.Add(item);
+                item.Hide();
+
+
+            }
+            FoodList[0].Show();
             
         }
         public void MoveMethod(object sender, EventArgs e)
@@ -77,36 +85,9 @@ namespace Snake
                     }
                     else
                     {
-                        z += 1;
-                        if (z <= LabelList.Count)
-                        {
-                            if (SaveLastClickList[SaveLastClickList.Count - 2] == "Left")
-                            {
-                                for (int i = z; i < LabelList.Count; i++)
-                                {
-                                    LabelList[i].Left -= 20;
-                                }
-                            }
-                            else if (SaveLastClickList[SaveLastClickList.Count - 2] == "Right")
-                            {
-                                for (int i = z; i < LabelList.Count; i++)
-                                {
-                                    LabelList[i].Left += 20;
-                                }
-                            }
-                            for (int i = 0; i < z; i++)
-                            {
-                                LabelList[i].Top -= 20;
-                            }
-                        }
-                        else
-                        {
-                            foreach (var item in LabelList)
-                            {
-                                item.Top -= 20;
-
-                            }
-                        }
+                        StandartLocationMethod();
+                        LabelList[0].Top -= 20;
+                        LabelList[0].Text = "^";
                     }
                     break;
                 case "Left":
@@ -119,37 +100,11 @@ namespace Snake
                     }
                     else
                     {
-                        z += 1;
-                        if (z <= LabelList.Count)
-                        {
-                            if (SaveLastClickList[SaveLastClickList.Count - 2] == "Top")
-                            {
-                                for (int i = z; i < LabelList.Count; i++)
-                                {
-                                    LabelList[i].Top -= 20;
-                                }
-                            }
-                            else if (SaveLastClickList[SaveLastClickList.Count - 2] == "Bottom")
-                            {
-                                for (int i = z; i < LabelList.Count; i++)
-                                {
-                                    LabelList[i].Top += 20;
-                                }
-                            }
-                            for (int i = 0; i < z; i++)
-                            {
+                        StandartLocationMethod();
+                        LabelList[0].Left -= 20;
+                        LabelList[0].Text = "<";
 
-                                LabelList[i].Left -= 20;
-                            }
-                        }
-                        else
-                        {
-                            foreach (var item in LabelList)
-                            {
-                                item.Left -= 20;
 
-                            }
-                        }
                     }
                     break;
                 case "Right":
@@ -162,37 +117,10 @@ namespace Snake
                     }
                     else
                     {
-                        z += 1;
-                        if (z <= LabelList.Count)
-                        {
-                            if (SaveLastClickList[SaveLastClickList.Count - 2] == "Top")
-                            {
-                                for (int i = z; i < LabelList.Count; i++)
-                                {
-                                    LabelList[i].Top -= 20;
-                                }
-                            }
-                            else if (SaveLastClickList[SaveLastClickList.Count - 2] == "Bottom")
-                            {
-                                for (int i = z; i < LabelList.Count; i++)
-                                {
-                                    LabelList[i].Top += 20;
-                                }
-                            }
-                            for (int i = 0; i < z; i++)
-                            {
+                        StandartLocationMethod();
+                        LabelList[0].Left += 20;
+                        LabelList[0].Text = ">";
 
-                                LabelList[i].Left += 20;
-                            }
-                        }
-                        else
-                        {
-                            foreach (var item in LabelList)
-                            {
-                                item.Left += 20;
-
-                            }
-                        }
                     }
                     break;
                 case "Bottom":
@@ -207,40 +135,9 @@ namespace Snake
                     }
                     else
                     {
-                        z+=1;
-                        if (z<= LabelList.Count)
-                        {
-                            if (SaveLastClickList[SaveLastClickList.Count - 2] == "Left")
-                            {
-                                for (int i = z; i < LabelList.Count; i++)
-                                {
-                                    LabelList[i].Left -= 20;
-                                }
-                            }
-                            else if (SaveLastClickList[SaveLastClickList.Count - 2] == "Right")
-                            {
-                                for (int i = z; i < LabelList.Count; i++)
-                                {
-                                    LabelList[i].Left += 20;
-                                }
-                            }
-                                for (int i = 0; i < z; i++)
-                                {
-
-                                    LabelList[i].Top += 20;
-                                }
-                        }
-                        else
-                        {
-                            foreach (var item in LabelList)
-                            {
-                                item.Top += 20;
-
-                            }
-                        }
-
-
-
+                        StandartLocationMethod();
+                        LabelList[0].Top += 20;
+                        LabelList[0].Text = "v";
 
                     }
                     break;
@@ -259,7 +156,6 @@ namespace Snake
                     if (SaveLastClickList[SaveLastClickList.Count - 1] != "Top" && SaveLastClickList[SaveLastClickList.Count - 1] != "Bottom")
                     {
                         a = "Top";
-                        z = 0;
                         SaveLastClickList.Add(a);
                     }
                     break;
@@ -267,7 +163,6 @@ namespace Snake
 
                     if (SaveLastClickList[SaveLastClickList.Count - 1] != "Left" && SaveLastClickList[SaveLastClickList.Count - 1] != "Right")
                     {
-                        z = 0;
                         a = "Left";
                         SaveLastClickList.Add(a);
                     }
@@ -276,7 +171,6 @@ namespace Snake
                 case "Right":
                     if (SaveLastClickList[SaveLastClickList.Count - 1] != "Right" && SaveLastClickList[SaveLastClickList.Count - 1] != "Left")
                     {
-                        z = 0;
                         a = "Right";
                         SaveLastClickList.Add(a);
                     }
@@ -285,20 +179,46 @@ namespace Snake
                 case "Bot":
                     if (SaveLastClickList[SaveLastClickList.Count - 1] != "Bottom" && SaveLastClickList[SaveLastClickList.Count - 1] != "Top")
                     {
-                        z = 0;
                         a = "Bottom";
                         SaveLastClickList.Add(a);
                     }
-
                     break;
+            }
+        }
+        public void StandartLocationMethod()
+        {
+            locationsave.Clear();
+            for (int i = 0; i < LabelList.Count; i++)
+            {
+                locationsave.Add(LabelList[i].Location);
+            }
+            for (int i = 0; i < LabelList.Count; i++)
+            {
+                if (i + 1 == LabelList.Count)
+                    break;
+                LabelList[i + 1].Location = locationsave[i];
             }
         }
         public void Limit()
         {
+            int z = 0;
             if (LabelList[0].Top < 0 || LabelList[0].Top > 370 || LabelList[0].Left < 0|| LabelList[0].Left >610)
             {
                 timer.Enabled = false;
                 MessageBox.Show("Lose");
+            }
+            for (int i = 0; i < LabelList.Count; i++)
+            {
+                for (int j = 0; j < LabelList.Count; j++)
+                {
+                    if (i == j)
+                        continue;
+                    else if(LabelList[i].Location == LabelList[j].Location)
+                    {
+                        timer.Enabled = false;
+                        MessageBox.Show("Lose");
+                    }
+                }
             }
         }
         public void Eating(ref int  p)
@@ -308,32 +228,28 @@ namespace Snake
                 switch (a)
                 {
                     case "Right":
+
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X - 20, LabelList[LabelList.Count-1].Location.Y);
                         LabelList.Add(FoodList[p]);
-                        //FoodList[p + 1].Show();
                         break;
                     case "Top":
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X, LabelList[LabelList.Count-1].Location.Y + 20);
                         LabelList.Add(FoodList[p]);
-                       // FoodList[p + 1].Show();
                         break;
                     case "Left":
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X + 20, LabelList[LabelList.Count-1].Location.Y);
                         LabelList.Add(FoodList[p]);
-                       // FoodList[p + 1].Show();
                         break;
                     case "Bottom":
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X, LabelList[LabelList.Count-1].Location.Y - 20);
                         LabelList.Add(FoodList[p]);
-                       // FoodList[p + 1].Show();
                         break;
                     default:
                         break;
 
                 }
+                FoodList[p + 1].Show();
                 p += 1;
-               // this.BackColor = Color.GreenYellow;
-
             }
 
         }
