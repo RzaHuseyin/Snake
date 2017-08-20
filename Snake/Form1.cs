@@ -17,10 +17,11 @@ namespace Snake
         List<Label>  FoodList = new List<Label>();
         List<string> SaveLastClickList = new List<string>();
         List<Point>  locationsave = new List<Point>();
-
         Random rm = new Random();
         string a = "";
         int p = 0;
+        int k = 30;
+        int speed = 400;
         System.Timers.Timer timer = new System.Timers.Timer(400);
         public Form1()
         {
@@ -41,6 +42,7 @@ namespace Snake
             lbl.Location = new Point(rm.Next(1, 14) * 20, rm.Next(1, 14) * 20);
             lbl.BackColor = Color.Red;
             lbl.Font = new Font("Serif", 11, FontStyle.Bold);
+            lbl.TextAlign = ContentAlignment.MiddleCenter;
             LabelList.Add(lbl);
             foreach (var item in LabelList)
             {
@@ -233,11 +235,15 @@ namespace Snake
         {
             if (LabelList[0].Location == FoodList[p].Location)
             {
-
+                if (p == 29)
+                {
+                    speed -= 30;
+                    timer.Elapsed -= MoveMethod;
+                    MessageBox.Show("You Win", "Congratulation");
+                }
                 switch (a)
                 {
                     case "Right":
-
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X - 20, LabelList[LabelList.Count-1].Location.Y);
                         LabelList.Add(FoodList[p]);
                         break;
@@ -258,13 +264,17 @@ namespace Snake
                 }
                 FoodList[p + 1].Show();
                 p += 1;
-                label8.Text = p.ToString();
+                --k;
+                label8.Text = k.ToString();
+                
             }
+            
         }
         private void RefreshClickMethod(object sender, EventArgs e)
         {
             a="";
             p=0;
+            timer.Interval = speed;
             LabelList.Clear();
             this.Controls.RemoveByKey("label01");
             SaveLastClickList.Add("something");
@@ -272,7 +282,8 @@ namespace Snake
 	        {
                 this.Controls.RemoveByKey(item.Name);
 	        }
-            label8.Text = "0";
+            label8.Text = "30";
+            k = 30;
             timer.Elapsed -= MoveMethod;
             FoodList.Clear();
             creatSnake();

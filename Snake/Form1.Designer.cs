@@ -150,7 +150,7 @@
             this.label7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.label7.Size = new System.Drawing.Size(122, 35);
             this.label7.TabIndex = 10;
-            this.label7.Text = "Score:";
+            this.label7.Text = "Count:";
             // 
             // label8
             // 
@@ -166,7 +166,7 @@
             this.label8.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.label8.Size = new System.Drawing.Size(64, 35);
             this.label8.TabIndex = 11;
-            this.label8.Text = "0";
+            this.label8.Text = "30";
             this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label9

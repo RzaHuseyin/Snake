@@ -6,3 +6,11 @@ c:\users\rza\documents\visual studio 2017\Projects\Snake\Snake\obj\Debug\Snake.P
 c:\users\rza\documents\visual studio 2017\Projects\Snake\Snake\obj\Debug\Snake.csproj.GenerateResource.Cache
 c:\users\rza\documents\visual studio 2017\Projects\Snake\Snake\obj\Debug\Snake.exe
 c:\users\rza\documents\visual studio 2017\Projects\Snake\Snake\obj\Debug\Snake.pdb
+C:\Users\Rza\Documents\GitHub\Snake\Snake\bin\Debug\Snake.exe.config
+C:\Users\Rza\Documents\GitHub\Snake\Snake\bin\Debug\Snake.exe
+C:\Users\Rza\Documents\GitHub\Snake\Snake\bin\Debug\Snake.pdb
+C:\Users\Rza\Documents\GitHub\Snake\Snake\obj\Debug\Snake.Form1.resources
+C:\Users\Rza\Documents\GitHub\Snake\Snake\obj\Debug\Snake.Properties.Resources.resources
+C:\Users\Rza\Documents\GitHub\Snake\Snake\obj\Debug\Snake.csproj.GenerateResource.Cache
+C:\Users\Rza\Documents\GitHub\Snake\Snake\obj\Debug\Snake.exe
+C:\Users\Rza\Documents\GitHub\Snake\Snake\obj\Debug\Snake.pdb
