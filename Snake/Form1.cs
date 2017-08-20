@@ -12,11 +12,11 @@ namespace Snake
 {
     public partial class Form1 : Form
     {
-        List<Label> LabelList = new List<Label>();
-        List<Label> FoodList = new List<Label>();
-        List<string> SaveLastClickList = new List<string>();
-        List<Point> locationsave = new List<Point>();
 
+        List<Label>  LabelList = new List<Label>();
+        List<Label>  FoodList = new List<Label>();
+        List<string> SaveLastClickList = new List<string>();
+        List<Point>  locationsave = new List<Point>();
 
         Random rm = new Random();
         string a = "";
@@ -25,8 +25,8 @@ namespace Snake
         public Form1()
         {
             InitializeComponent();
+            this.KeyPreview = true;
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             SaveLastClickList.Add("something");
@@ -37,6 +37,7 @@ namespace Snake
         {
             Label lbl = new Label();
             lbl.Size = new Size(20, 20);
+            lbl.Name= "label01";
             lbl.Location = new Point(rm.Next(1, 14) * 20, rm.Next(1, 14) * 20);
             lbl.BackColor = Color.Red;
             lbl.Font = new Font("Serif", 11, FontStyle.Bold);
@@ -54,6 +55,7 @@ namespace Snake
             {
                 Label food = new Label();
                 food.Size = new Size(20, 20);
+                food.Name=""+i;
                 food.Text = "O";
                 food.Font = new Font("Serif", 11, FontStyle.Bold);
                 food.Location = new Point(rm.Next(1, 14) * 20, rm.Next(1, 14) * 20);
@@ -64,19 +66,15 @@ namespace Snake
             {
                 this.Controls.Add(item);
                 item.Hide();
-
-
             }
             FoodList[0].Show();
-            
         }
         public void MoveMethod(object sender, EventArgs e)
         {
-            //Label btn = sender as Label;
             switch (a)
             {
-                case "Top":
-                    if (SaveLastClickList[SaveLastClickList.Count - 2] == "Bottom")
+                case "Up":
+                    if (SaveLastClickList[SaveLastClickList.Count - 2] == "Down")
                     {
                         foreach (var item in LabelList)
                         {
@@ -103,8 +101,6 @@ namespace Snake
                         StandartLocationMethod();
                         LabelList[0].Left -= 20;
                         LabelList[0].Text = "<";
-
-
                     }
                     break;
                 case "Right":
@@ -120,11 +116,10 @@ namespace Snake
                         StandartLocationMethod();
                         LabelList[0].Left += 20;
                         LabelList[0].Text = ">";
-
                     }
                     break;
-                case "Bottom":
-                    if (SaveLastClickList[SaveLastClickList.Count - 2] == "Top")
+                case "Down":
+                    if (SaveLastClickList[SaveLastClickList.Count - 2] == "Up")
                     {
                         MessageBox.Show("Test");
 
@@ -138,24 +133,22 @@ namespace Snake
                         StandartLocationMethod();
                         LabelList[0].Top += 20;
                         LabelList[0].Text = "v";
-
                     }
                     break;
             }
-            
             Limit();
             Eating(ref p);
 
         }
-        private void Bu(object sender, EventArgs e)
+        private void ClickLable(object sender, EventArgs e)
         {
             Label btn = sender as Label;
             switch (btn.Text)
             {
-                case "Top":
-                    if (SaveLastClickList[SaveLastClickList.Count - 1] != "Top" && SaveLastClickList[SaveLastClickList.Count - 1] != "Bottom")
+                case "Up":
+                    if (SaveLastClickList[SaveLastClickList.Count - 1] != "Up" && SaveLastClickList[SaveLastClickList.Count - 1] != "Down")
                     {
-                        a = "Top";
+                        a = "Up";
                         SaveLastClickList.Add(a);
                     }
                     break;
@@ -176,10 +169,10 @@ namespace Snake
                     }
 
                     break;
-                case "Bot":
-                    if (SaveLastClickList[SaveLastClickList.Count - 1] != "Bottom" && SaveLastClickList[SaveLastClickList.Count - 1] != "Top")
+                case "Down":
+                    if (SaveLastClickList[SaveLastClickList.Count - 1] != "Down" && SaveLastClickList[SaveLastClickList.Count - 1] != "Up")
                     {
-                        a = "Bottom";
+                        a = "Down";
                         SaveLastClickList.Add(a);
                     }
                     break;
@@ -202,10 +195,15 @@ namespace Snake
         public void Limit()
         {
             int z = 0;
+            bool l = true;
             if (LabelList[0].Top < 0 || LabelList[0].Top > 370 || LabelList[0].Left < 0|| LabelList[0].Left >610)
             {
                 timer.Enabled = false;
-                MessageBox.Show("Lose");
+                if (p > Convert.ToInt32(label9.Text))
+                {
+                    label9.Text = p.ToString();
+                }
+                MessageBox.Show("Game Over");
             }
             for (int i = 0; i < LabelList.Count; i++)
             {
@@ -215,9 +213,19 @@ namespace Snake
                         continue;
                     else if(LabelList[i].Location == LabelList[j].Location)
                     {
+                        
                         timer.Enabled = false;
-                        MessageBox.Show("Lose");
+                        if (p > Convert.ToInt32(label9.Text))
+                        {
+                            label9.Text = p.ToString();
+                        }
+                        MessageBox.Show("Game Over");
+                        l = false;
                     }
+                }
+                if (l==false)
+                {
+                    break;
                 }
             }
         }
@@ -225,6 +233,7 @@ namespace Snake
         {
             if (LabelList[0].Location == FoodList[p].Location)
             {
+
                 switch (a)
                 {
                     case "Right":
@@ -232,7 +241,7 @@ namespace Snake
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X - 20, LabelList[LabelList.Count-1].Location.Y);
                         LabelList.Add(FoodList[p]);
                         break;
-                    case "Top":
+                    case "Up":
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X, LabelList[LabelList.Count-1].Location.Y + 20);
                         LabelList.Add(FoodList[p]);
                         break;
@@ -240,44 +249,68 @@ namespace Snake
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X + 20, LabelList[LabelList.Count-1].Location.Y);
                         LabelList.Add(FoodList[p]);
                         break;
-                    case "Bottom":
+                    case "Down":
                         FoodList[p].Location = new Point(LabelList[LabelList.Count-1].Location.X, LabelList[LabelList.Count-1].Location.Y - 20);
                         LabelList.Add(FoodList[p]);
                         break;
                     default:
                         break;
-
                 }
                 FoodList[p + 1].Show();
                 p += 1;
+                label8.Text = p.ToString();
             }
-
         }
-        
-
         private void RefreshClickMethod(object sender, EventArgs e)
         {
-            
-
-
-            //a = "";
-
-            // n = 8;
-            // m = 9;
-            //foreach (var item in LabelList)
-            //{
-            //    this.Controls.Remove(item);
-            //}
-            //foreach (var item in FoodList)
-            //{
-            //    this.Controls.Remove(item);
-            //}
-            //LabelList.Clear();
-            //FoodList.Clear();
-            //timer.Elapsed -= MoveMethod;
-
-            //creatSnake();
-            //Food();
+            a="";
+            p=0;
+            LabelList.Clear();
+            this.Controls.RemoveByKey("label01");
+            SaveLastClickList.Add("something");
+            foreach (var item in FoodList)
+	        {
+                this.Controls.RemoveByKey(item.Name);
+	        }
+            label8.Text = "0";
+            timer.Elapsed -= MoveMethod;
+            FoodList.Clear();
+            creatSnake();
+            Food();
+        }
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyData.ToString())
+            {
+                case "Up":
+                    if (SaveLastClickList[SaveLastClickList.Count - 1] != "Up" && SaveLastClickList[SaveLastClickList.Count - 1] != "Down")
+                    {
+                        a = "Up";
+                        SaveLastClickList.Add(a);
+                    }
+                    break;
+                case "Left":
+                    if (SaveLastClickList[SaveLastClickList.Count - 1] != "Left" && SaveLastClickList[SaveLastClickList.Count - 1] != "Right")
+                    {
+                        a = "Left";
+                        SaveLastClickList.Add(a);
+                    }
+                    break;
+                case "Right":
+                    if (SaveLastClickList[SaveLastClickList.Count - 1] != "Right" && SaveLastClickList[SaveLastClickList.Count - 1] != "Left")
+                    {
+                        a = "Right";
+                        SaveLastClickList.Add(a);
+                    }
+                    break;
+                case "Down":
+                    if (SaveLastClickList[SaveLastClickList.Count - 1] != "Down" && SaveLastClickList[SaveLastClickList.Count - 1] != "Up")
+                    {
+                        a = "Down";
+                        SaveLastClickList.Add(a);
+                    }
+                    break;
+            }
         }
     }
 }
